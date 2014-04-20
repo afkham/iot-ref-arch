@@ -18,11 +18,54 @@
  */
 package org.wso2.iot.refarch.rpi.agent;
 
+import com.pi4j.wiringpi.DHTSensor;
+import com.pi4j.wiringpi.DHTSensorType;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Main class in the Raspberry Pi IoT agent
  */
 public class Main {
-    public static void main(String[] args) {
+    private static final int DEFAULT_DATA_PIN_NUMBER = 27;
+    private DHTSensor dhtSensor;
 
+    public Main(int dataPinNumber) {
+        dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
+    }
+
+    public static void main(String[] args) {
+        int dataPinNumber = DEFAULT_DATA_PIN_NUMBER;
+        if (args[0] != null) {
+            dataPinNumber = Integer.parseInt(args[0]);
+        }
+        new Main(dataPinNumber).start();
+    }
+
+    private void start() {
+        ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
+        dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 20, 20, TimeUnit.SECONDS);
+    }
+
+    public class DHTSensorReaderTask implements Runnable {
+        private DHTSensor dhtSensor;
+
+        public DHTSensorReaderTask(DHTSensor dhtSensor) {
+            this.dhtSensor = dhtSensor;
+        }
+
+        @Override
+        public void run() {
+            dhtSensor.read();
+            float temperature = dhtSensor.getTemperature(false);
+            int humidity = dhtSensor.getHumidity();
+
+            System.out.println("temperature = " + temperature);
+            System.out.println("humidity = " + humidity);
+
+            //TODO: publish to CEP/BAM
+        }
     }
 }
