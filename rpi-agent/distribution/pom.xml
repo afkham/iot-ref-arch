@@ -1,0 +1,200 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.wso2.iot.refarch</groupId>
+        <artifactId>rpi-agent-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+    <artifactId>rpi-agent-distribution</artifactId>
+    <name>Raspberry Pi IoT agent :: Distribution</name>
+    <description>Packaged Raspberry Pi IoT agent Distributions</description>
+    <packaging>pom</packaging>
+
+
+    <!-- PROJECT DEPENDENCIES -->
+    <dependencies>
+        <dependency>
+            <groupId>com.pi4j</groupId>
+            <artifactId>pi4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.iot.refarch</groupId>
+            <artifactId>rpi-agent</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- BUILD INSTRUCTIONS -->
+    <build>
+        <plugins>
+
+            <!-- ACQUIRE DEPENDENCIES -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+
+                    <!-- DOWNLOAD LICENSE, README & NOTICE ARTIFACTS -->
+                    <execution>
+                        <id>copy-license</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.pi4j</groupId>
+                                    <artifactId>pi4j-parent</artifactId>
+                                    <version>0.0.5</version>
+                                    <classifier>license</classifier>
+                                    <type>txt</type>
+                                    <overWrite>true</overWrite>
+                                    <destFileName>LICENSE.txt</destFileName>
+                                    <outputDirectory>${project.build.directory}/distro-contents</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.pi4j</groupId>
+                                    <artifactId>pi4j-parent</artifactId>
+                                    <version>0.0.5</version>
+                                    <classifier>notice</classifier>
+                                    <type>txt</type>
+                                    <overWrite>true</overWrite>
+                                    <destFileName>NOTICE.txt</destFileName>
+                                    <outputDirectory>${project.build.directory}/distro-contents</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.pi4j</groupId>
+                                    <artifactId>pi4j-parent</artifactId>
+                                    <version>0.0.5</version>
+                                    <classifier>readme</classifier>
+                                    <type>md</type>
+                                    <overWrite>true</overWrite>
+                                    <destFileName>README.md</destFileName>
+                                    <outputDirectory>${project.build.directory}/distro-contents</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+
+                    <!-- DOWNLOAD LIBRARY ARTIFACTS -->
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/distro-contents/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <excludeTransitive>true</excludeTransitive>
+                            <stripVersion>false</stripVersion>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--
+
+
+                        &lt;!&ndash; CREATE DEBIAN (.DEB) PACKAGE &ndash;&gt;
+                        <plugin>
+                            <artifactId>jdeb</artifactId>
+                            <groupId>org.vafer</groupId>
+                            <version>0.11</version>
+                            <executions>
+                                <execution>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>jdeb</goal>
+                                    </goals>
+                                    <configuration>
+                                        <attach>true</attach>
+                                        <deb>${project.build.directory}/pi4j-${version}.deb</deb>
+                                        <installDir>/opt/pi4j</installDir>
+                                        <dataSet>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/LICENSE.txt</src>
+                                                <dst>LICENSE</dst>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/LICENSE</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/NOTICE.txt</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/NOTICE</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/README.md</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/README</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/lib/pi4j-core.jar</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/lib/pi4j-core.jar</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/lib/pi4j-core.jar</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/lib/pi4j-core.jar</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/lib/pi4j-device.jar</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/lib/pi4j-device.jar</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/lib/pi4j-service.jar</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/lib/pi4j-service.jar</dst>
+                                            </data>
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/lib/pi4j-gpio-extension.jar</src>
+                                                <type>file</type>
+                                                <dst>/opt/pi4j/lib/pi4j-gpio-extension.jar</dst>
+                                            </data>
+
+                                            <data>
+                                                <src>${project.build.directory}/distro-contents/examples</src>
+                                                <type>directory</type>
+                                                <mapper>
+                                                    <type>perm</type>
+                                                    <prefix>/opt/pi4j/examples</prefix>
+                                                    <filemode>777</filemode>
+                                                </mapper>
+                                            </data>
+                                        </dataSet>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>-->
+
+            <!-- CREATE .ZIP PACKAGE OF Pi4J DISTRIBUTION -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <finalName>pi4j-${project.version}</finalName>
+                    <descriptors>
+                        <descriptor>src/assembly/distribution.xml</descriptor>
+                    </descriptors>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-distribution-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
