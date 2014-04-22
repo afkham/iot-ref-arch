@@ -19,8 +19,8 @@
             <fileMode>755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>{basedir}/../core/main/native</directory>
-            <outputDirectory>/</outputDirectory>
+            <directory>${basedir}/../core/target</directory>
+            <outputDirectory>/lib</outputDirectory>
             <includes>
                 <include>**/*.so</include>
             </includes>
