@@ -70,7 +70,7 @@ done
 PRGDIR=`dirname "$PRG"`
 
 # Only set RPI_AGENT_HOME if not already set
-[ -z "$RPI_AGENT_HOME" ] && RPI_AGENT_HOME=`cd "$PRGDIR/.." ; pwd`
+[ -z "$RPI_AGENT_HOME" ] && RPI_AGENT_HOME=`cd "$PRGDIR" ; pwd`
 
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin; then
