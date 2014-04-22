@@ -62,7 +62,7 @@ public class Main {
 
     public static void main(String[] args) {
         int dataPinNumber = DEFAULT_DATA_PIN_NUMBER;
-        if (args[0] != null) {
+        if (args.length > 0 && args[0] != null) {
             dataPinNumber = Integer.parseInt(args[0]);
         }
         new Main(dataPinNumber).start();
