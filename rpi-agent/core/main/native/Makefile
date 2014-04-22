@@ -2,6 +2,7 @@
 # Makefile:
 #	libdht - DHT Java (JNI) library for the Raspberry Pi
 #
+JAVA_HOME=/usr/lib/jvm/jdk-7-oracle-armhf
 TARGET=../../target/libdht.so
 
 #DEBUG	= -g -O0
