@@ -57,7 +57,7 @@
                 </executions>
                 <configuration>
                     <executable>make</executable>
-                    <workingDirectory>main/native</workingDirectory>
+                    <workingDirectory>src/main/native</workingDirectory>
                     <arguments>
                         <argument>all</argument>
                     </arguments>
