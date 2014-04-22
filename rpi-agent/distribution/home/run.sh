@@ -72,9 +72,6 @@ PRGDIR=`dirname "$PRG"`
 # Only set RPI_AGENT_HOME if not already set
 [ -z "$RPI_AGENT_HOME" ] && RPI_AGENT_HOME=`cd "$PRGDIR/.." ; pwd`
 
-# Set AXIS2_HOME. Needed for One Click JAR Download
-AXIS2_HOME=$RPI_AGENT_HOME
-
 # For Cygwin, ensure paths are in UNIX format before anything is touched
 if $cygwin; then
   [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
@@ -224,7 +221,7 @@ do
         RPI_AGENT_CLASSPATH="$RPI_AGENT_CLASSPATH":$f
     fi
 done
-for t in "$RPI_AGENT_HOME"/lib/commons-lang*.jar
+for t in "$RPI_AGENT_HOME"/lib/*.jar
 do
     RPI_AGENT_CLASSPATH="$RPI_AGENT_CLASSPATH":$t
 done
