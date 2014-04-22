@@ -165,59 +165,6 @@
                     </executions>
                 </plugin>
 
-                <!-- DOWNLOAD LICENSE, README & NOTICE ARTIFACTS -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>2.5.1</version>
-                    <executions>
-                        <execution>
-                            <id>copy-license</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>copy</goal>
-                            </goals>
-                            <configuration>
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>com.pi4j</groupId>
-                                        <artifactId>pi4j-parent</artifactId>
-                                        <version>${project.version}</version>
-                                        <classifier>license</classifier>
-                                        <type>txt</type>
-                                        <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}</outputDirectory>
-                                        <destFileName>LICENSE.txt</destFileName>
-                                    </artifactItem>
-                                    <artifactItem>
-                                        <groupId>com.pi4j</groupId>
-                                        <artifactId>pi4j-parent</artifactId>
-                                        <version>${project.version}</version>
-                                        <classifier>notice</classifier>
-                                        <type>txt</type>
-                                        <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}</outputDirectory>
-                                        <destFileName>NOTICE.txt</destFileName>
-                                    </artifactItem>
-                                    <artifactItem>
-                                        <groupId>com.pi4j</groupId>
-                                        <artifactId>pi4j-parent</artifactId>
-                                        <version>${project.version}</version>
-                                        <classifier>readme</classifier>
-                                        <type>md</type>
-                                        <overWrite>true</overWrite>
-                                        <outputDirectory>${project.build.directory}</outputDirectory>
-                                        <destFileName>README.md</destFileName>
-                                    </artifactItem>
-                                </artifactItems>
-                                <outputDirectory>${project.build.directory}</outputDirectory>
-                                <overWriteReleases>false</overWriteReleases>
-                                <overWriteSnapshots>true</overWriteSnapshots>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <!-- USED TO ATTACH EXTRA ARTIFACTS -->
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -255,6 +202,11 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.2</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -263,11 +215,11 @@
     <!-- PROJECT DEPENDENCIES -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
+            <!--<dependency>
                 <groupId>com.pi4j</groupId>
                 <artifactId>pi4j-core</artifactId>
                 <version>0.0.5.wso2</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

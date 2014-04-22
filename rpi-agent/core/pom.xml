@@ -16,11 +16,11 @@
 
     <!-- PROJECT DEPENDENCIES -->
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
             <version>0.0.5.wso2</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <!-- BUILD INSTRUCTIONS -->
@@ -66,6 +66,23 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
             </plugin>
+
+            <!--<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>make</executable>
+                    <workingDirectory>{basedir}/main/native</workingDirectory>
+                </configuration>
+            </plugin>-->
+
         </plugins>
     </build>
 </project>

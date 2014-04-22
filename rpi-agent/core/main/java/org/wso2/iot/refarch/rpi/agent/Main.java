@@ -18,9 +18,6 @@
  */
 package org.wso2.iot.refarch.rpi.agent;
 
-import com.pi4j.wiringpi.DHTSensor;
-import com.pi4j.wiringpi.DHTSensorType;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

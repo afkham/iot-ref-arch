@@ -10,5 +10,20 @@
             <directory>target/distro-contents</directory>
             <outputDirectory>/</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>home</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>**/*.sh</include>
+            </includes>
+            <fileMode>755</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>{basedir}/../core/main/native</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>**/*.so</include>
+            </includes>
+        </fileSet>
     </fileSets>
 </assembly>

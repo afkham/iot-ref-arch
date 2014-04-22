@@ -15,10 +15,10 @@
 
     <!-- PROJECT DEPENDENCIES -->
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.wso2.iot.refarch</groupId>
             <artifactId>rpi-agent</artifactId>
@@ -37,7 +37,7 @@
                 <executions>
 
                     <!-- DOWNLOAD LICENSE, README & NOTICE ARTIFACTS -->
-                    <execution>
+                    <!--<execution>
                         <id>copy-license</id>
                         <phase>package</phase>
                         <goals>
@@ -79,7 +79,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
                         </configuration>
-                    </execution>
+                    </execution>-->
 
                     <!-- DOWNLOAD LIBRARY ARTIFACTS -->
                     <execution>
@@ -180,7 +180,7 @@
                 <version>2.4</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
-                    <finalName>pi4j-${project.version}</finalName>
+                    <finalName>rpi-agent-${project.version}</finalName>
                     <descriptors>
                         <descriptor>src/assembly/distribution.xml</descriptor>
                     </descriptors>

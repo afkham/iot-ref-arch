@@ -252,7 +252,7 @@ status=$START_EXIT_STATUS
 #To monitor a Carbon server in remote JMX mode on linux host machines, set the below system property.
 #   -Djava.rmi.server.hostname="your.IP.goes.here"
 
-LIB_PATH=/home/pi/pi4j-azeez/pi4j-native/src/main/native/
+LIB_PATH=$RPI_AGENT_HOME/lib
 
 while [ "$status" = "$START_EXIT_STATUS" ]
 do
