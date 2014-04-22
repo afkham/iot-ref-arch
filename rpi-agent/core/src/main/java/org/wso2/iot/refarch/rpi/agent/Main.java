@@ -70,7 +70,7 @@ public class Main {
 
     private void start() {
         ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
-        dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 20, 20, TimeUnit.SECONDS);
+        dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 0, 20, TimeUnit.SECONDS);
     }
 
     public class DHTSensorReaderTask implements Runnable {
