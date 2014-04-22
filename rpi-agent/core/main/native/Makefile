@@ -2,8 +2,7 @@
 # Makefile:
 #	libdht - DHT Java (JNI) library for the Raspberry Pi
 #
-
-TARGET=target/libdht.so
+TARGET=../../target/libdht.so
 
 #DEBUG	= -g -O0
 DEBUG	= -O3

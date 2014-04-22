@@ -4,7 +4,7 @@
 #define GPIO_BASE                (BCM2708_PERI_BASE + 0x200000) /* GPIO controller */
 
 #include <jni.h>
-#include "com_pi4j_wiringpi_DHTSensor.h"
+#include "org_wso2_iot_refarch_rpi_agent_DHTSensor.h"
 
 #include <stdio.h>
 #include <string.h>
