@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventBuilder name="json_builder" statistics="enable" trace="enable" xmlns="http://wso2.org/carbon/eventbuilder">
+    <from eventAdaptorName="iotadapter" eventAdaptorType="http">
+        <property name="topic">iot</property>
+    </from>
+    <mapping customMapping="disable" type="json"/>
+    <to streamName="iot_stream" version="1.0.0"/>
+</eventBuilder>

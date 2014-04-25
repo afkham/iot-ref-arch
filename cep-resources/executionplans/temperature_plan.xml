@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<executionPlan name="temperature_plan" statistics="enable"
+  trace="enable" xmlns="http://wso2.org/carbon/eventprocessor">
+  <description/>
+  <siddhiConfiguration>
+    <property name="siddhi.persistence.snapshot.time.interval.minutes">0</property>
+    <property name="siddhi.enable.distributed.processing">false</property>
+  </siddhiConfiguration>
+  <importedStreams>
+    <stream as="iot_stream" name="iot_stream" version="1.0.0"/>
+  </importedStreams>
+  <queryExpressions><![CDATA[from iot_stream[temperature > 40]#window.time(5 sec)
+select temperature
+insert into out]]></queryExpressions>
+  <exportedStreams>
+    <stream name="iot_out" valueOf="out" version="1.0.0"/>
+  </exportedStreams>
+</executionPlan>
