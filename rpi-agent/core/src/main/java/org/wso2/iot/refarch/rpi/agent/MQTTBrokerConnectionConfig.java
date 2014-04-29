@@ -31,7 +31,7 @@ package org.wso2.iot.refarch.rpi.agent;
  * Created by deep on 4/29/14.
  */
 public class MQTTBrokerConnectionConfig {
-    private String brokerProtocole = null;
+    private String brokerProtocole = "tcp";
     private String brokerHost = null;
     private String brokerPort = null;
     private String brokerUsername = null;
