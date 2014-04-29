@@ -21,6 +21,11 @@
             <artifactId>pi4j-core</artifactId>
             <version>0.0.5.wso2</version>
         </dependency>-->
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>mqtt-client</artifactId>
+            <version>0.4.0</version>
+        </dependency>
     </dependencies>
 
     <!-- BUILD INSTRUCTIONS -->
