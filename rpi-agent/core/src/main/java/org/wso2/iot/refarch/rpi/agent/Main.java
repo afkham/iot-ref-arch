@@ -63,8 +63,7 @@ public class Main {
 
     public Main(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
-        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig();
-        mqttBrokerConnectionConfig.setBrokerHost("10.100.0.209");
+        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
     }
 
     public static void main(String[] args) {
@@ -72,7 +71,6 @@ public class Main {
         if (args.length > 0 && args[0] != null) {
             dataPinNumber = Integer.parseInt(args[0]);
         }
-        MQTTBrokerConnectionConfig mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig();
 
         new Main(dataPinNumber).start();
     }

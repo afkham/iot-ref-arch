@@ -4,20 +4,25 @@ package org.wso2.iot.refarch.rpi.agent;
  * Created by deep on 4/29/14.
  */
 public class MQTTBrokerConnectionConfig {
-    private String brokerProtocole = "tcp";
-    private String brokerHost = "localhost";
-    private String prokerPort = "1833";
+    private String brokerProtocole = null;
+    private String brokerHost = null;
+    private String brokerPort = null;
     private String brokerUsername = null;
     private String brokerPassword = null;
     private boolean cleanSession = false;
     private String brokerUrl;
 
+    MQTTBrokerConnectionConfig(String host,String port){
+        this.brokerHost = host;
+        this.brokerPort = port;
+    }
+
     public String getProkerPort() {
-        return prokerPort;
+        return brokerPort;
     }
 
     public void setProkerPort(String prokerPort) {
-        this.prokerPort = prokerPort;
+        this.brokerPort = prokerPort;
     }
 
     public String getBrokerProtocole() {
