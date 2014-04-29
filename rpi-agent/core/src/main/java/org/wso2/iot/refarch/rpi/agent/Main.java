@@ -64,6 +64,10 @@ public class Main {
     public Main(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
+        String clientId = "R-Pi-Publisher";
+        String topicName = "wso2iot";
+        mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
+
     }
 
     public static void main(String[] args) {
@@ -76,9 +80,6 @@ public class Main {
     }
 
     private void start() {
-        String clientId = "R-Pi-Publisher";
-        String topicName = "wso2iot";
-        mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
         ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
         dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 0, 20, TimeUnit.SECONDS);
     }
@@ -100,8 +101,10 @@ public class Main {
             System.out.println("humidity = " + humidity);
 
             String message = "Temperature:" + Float.toString(temperature);
+            String humidityMsg = "Humidity:" + Integer.toString(humidity);
             try {
                 mqttClient.publish(1,message.getBytes());
+                mqttClient.publish(1,humidityMsg.getBytes());
             } catch (MqttException e) {
                 e.printStackTrace();
             }
