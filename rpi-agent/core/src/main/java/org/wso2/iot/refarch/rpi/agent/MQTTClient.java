@@ -85,6 +85,8 @@ public class MQTTClient implements MqttCallback {
 
             // Set this wrapper as the callback handler
             mqttClient.setCallback(this);
+		// Connect to the MQTT server
+        mqttClient.connect(connectionOptions);
 
         } catch (MqttException e) {
             e.printStackTrace();
@@ -95,7 +97,7 @@ public class MQTTClient implements MqttCallback {
     public void publish(int qos, byte[] payload) throws MqttException {
 
         // Connect to the MQTT server
-        mqttClient.connect(connectionOptions);
+        //mqttClient.connect(connectionOptions);
 
         // Create and configure a message
         MqttMessage message = new MqttMessage(payload);
