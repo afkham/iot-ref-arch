@@ -45,6 +45,9 @@ package org.wso2.iot.refarch.rpi.agent;
  * #L%
  */
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -55,9 +58,13 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     private static final int DEFAULT_DATA_PIN_NUMBER = 27;
     private DHTSensor dhtSensor;
+    private MQTTClient mqttClient;
+    private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
 
     public Main(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
+        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig();
+        mqttBrokerConnectionConfig.setBrokerHost("10.100.0.209");
     }
 
     public static void main(String[] args) {
@@ -65,10 +72,15 @@ public class Main {
         if (args.length > 0 && args[0] != null) {
             dataPinNumber = Integer.parseInt(args[0]);
         }
+        MQTTBrokerConnectionConfig mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig();
+
         new Main(dataPinNumber).start();
     }
 
     private void start() {
+        String clientId = "R-Pi-Publisher";
+        String topicName = "wso2iot";
+        mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
         ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
         dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 0, 20, TimeUnit.SECONDS);
     }
@@ -88,6 +100,13 @@ public class Main {
 
             System.out.println("temperature = " + temperature);
             System.out.println("humidity = " + humidity);
+
+            String message = "Temperature:" + Float.toString(temperature);
+            try {
+                mqttClient.publish(1,message.getBytes());
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
 
             //TODO: publish to CEP/BAM
         }
