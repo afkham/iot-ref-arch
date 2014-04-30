@@ -45,6 +45,9 @@ package org.wso2.iot.refarch.rpi.agent;
  * #L%
  */
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -55,9 +58,16 @@ import java.util.concurrent.TimeUnit;
 public class Main {
     private static final int DEFAULT_DATA_PIN_NUMBER = 27;
     private DHTSensor dhtSensor;
+    private MQTTClient mqttClient;
+    private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
 
     public Main(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
+        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
+        String clientId = "R-Pi-Publisher";
+        String topicName = "wso2iot";
+        mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
+
     }
 
     public static void main(String[] args) {
@@ -65,6 +75,7 @@ public class Main {
         if (args.length > 0 && args[0] != null) {
             dataPinNumber = Integer.parseInt(args[0]);
         }
+
         new Main(dataPinNumber).start();
     }
 
@@ -88,6 +99,15 @@ public class Main {
 
             System.out.println("temperature = " + temperature);
             System.out.println("humidity = " + humidity);
+
+            String message = "Temperature:" + Float.toString(temperature);
+            String humidityMsg = "Humidity:" + Integer.toString(humidity);
+            try {
+                mqttClient.publish(1,message.getBytes());
+                mqttClient.publish(1,humidityMsg.getBytes());
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
 
             //TODO: publish to CEP/BAM
         }
