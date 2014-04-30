@@ -242,6 +242,12 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>mqtt-maven2-repository</id>
+            <name>mqtt</name>
+            <url>http://repo.spring.io/plugins-release/</url>
+        </repository>
+
     </repositories>
 
 </project>
