@@ -30,7 +30,7 @@ package org.wso2.iot.refarch.rpi.agent;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
-import java.security.Timestamp;
+import java.io.PrintWriter;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -87,7 +87,7 @@ public class MQTTClient implements MqttCallback {
             mqttClient.setCallback(this);
 		// Connect to the MQTT server
         mqttClient.connect(connectionOptions);
-
+          mqttClient.subscribe("iot/demo");
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -116,7 +116,9 @@ public class MQTTClient implements MqttCallback {
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-
+        PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+        writer.println("YES");
+        writer.close();
     }
 
     @Override

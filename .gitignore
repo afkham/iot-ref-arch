@@ -218,4 +218,7 @@ pip-log.txt
 #################
 ## Idea
 #################
-.idea/ 
+.idea/*
+rpi-agent/.idea/*
+*.iml
+rpi-agent/core/target/

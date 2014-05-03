@@ -45,7 +45,6 @@ package org.wso2.iot.refarch.rpi.agent;
  * #L%
  */
 
-import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.concurrent.Executors;
@@ -83,7 +82,6 @@ public class Main {
         ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
         dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 0, 20, TimeUnit.SECONDS);
     }
-
     public class DHTSensorReaderTask implements Runnable {
         private DHTSensor dhtSensor;
 
