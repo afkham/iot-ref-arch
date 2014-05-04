@@ -5,15 +5,17 @@
         <format>tar.bz2</format>
         <format>zip</format>
     </formats>
+    <files>
+        <file>
+            <source>../config.properties</source>
+            <outputDirectory>wso2emm-${pom.version}/repository/conf/etc</outputDirectory>
+        </file>
+    </files>
     <fileSets>
         <fileSet>
             <directory>target/distro-contents</directory>
             <outputDirectory>/</outputDirectory>
         </fileSet>
-        <file>
-            <source>../config.properties</source>
-            <outputDirectory>wso2emm-${pom.version}/repository/conf/etc</outputDirectory>
-        </file>
         <fileSet>
             <directory>home</directory>
             <outputDirectory>/</outputDirectory>
