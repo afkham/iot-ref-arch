@@ -16,11 +16,11 @@
 
     <!-- PROJECT DEPENDENCIES -->
     <dependencies>
-        <!--<dependency>
+        <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-core</artifactId>
-            <version>0.0.5.wso2</version>
-        </dependency>-->
+            <version>0.0.5</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>
             <artifactId>mqtt-client</artifactId>
