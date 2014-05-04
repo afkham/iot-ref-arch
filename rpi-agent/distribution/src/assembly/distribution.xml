@@ -8,7 +8,7 @@
     <files>
         <file>
             <source>../config.properties</source>
-            <outputDirectory>wso2emm-${pom.version}/repository/conf/etc</outputDirectory>
+            <outputDirectory>/</outputDirectory>
         </file>
     </files>
     <fileSets>
