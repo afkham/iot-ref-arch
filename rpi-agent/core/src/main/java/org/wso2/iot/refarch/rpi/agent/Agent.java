@@ -53,8 +53,9 @@ public class Agent {
         try{
             InputStream is = new FileInputStream("config.properties");
             Properties properties = new Properties();
-            httpService = new HttpService( properties.getProperty("serverpath"));
             properties.load(is);
+            System.out.println("Server ip "+properties.getProperty("serverpath"));
+            httpService = new HttpService( properties.getProperty("serverpath"));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -155,8 +156,10 @@ public class Agent {
     }
 
     public static void main(String[] args) {
+        System.out.println("Agent starting");
         Agent agent = new Agent();
         agent.run();
+        System.out.println("Agent Process started");
     }
     /*
         Periodically send information using the HttpService
