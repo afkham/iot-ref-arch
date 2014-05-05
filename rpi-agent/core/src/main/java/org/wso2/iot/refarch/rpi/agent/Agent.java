@@ -69,7 +69,9 @@ public class Agent {
 
             JSONObject hardwareObject = new JSONObject();
             /* Hardware Information */
+            System.out.println("Start device reading");
             hardwareObject.put("serial_number", SystemInfo.getSerial());
+            System.out.println("Second");
             hardwareObject.put("cpu_revision", SystemInfo.getCpuRevision());
             hardwareObject.put("cpu_architecture", SystemInfo.getCpuArchitecture());
             hardwareObject.put("cpu_part", SystemInfo.getCpuPart());
