@@ -168,6 +168,7 @@ public class Agent {
         @Override
         public void run() {
             try {
+                System.out.println("Agent sending data");
                 JSONObject infoObject = createInfoObject();
                 httpService.sendPayload(infoObject);
             } catch (Exception e) {
