@@ -17,13 +17,17 @@
 package org.wso2.event.adaptor.mqtt.internal.util;
 
 
-public final class TestOutEventAdaptorConstants {
+public final class MQTTOutputEventAdaptorConstants {
 
-    private TestOutEventAdaptorConstants() {
+    private MQTTOutputEventAdaptorConstants() {
     }
 
-    public static final String EVENT_ADAPTOR_TYPE_TESTOUT = "testOut";
-    public static final String EVENT_ADAPTOR_CONF_FIELD1 = "property1";
-    public static final String EVENT_ADAPTOR_CONF_FIELD1_HINT = "property1Hint";
+    public static final String EVENT_ADAPTOR_TYPE_TESTOUT = "mqtt";
+    public static final String EVENT_ADAPTOR_CONF_TOPIC = "topic";
+    public static final String EVENT_ADAPTOR_CONF_TOPIC_HINT = "topicHint";
+    public static final String EVENT_ADAPTOR_CONF_CLIENTID = "clientId";
+    public static final String EVENT_ADAPTOR_CONF_CLIENTID_HINT = "clientIdHint";
+    public static final String EVENT_ADAPTOR_CONF_HOST = "host";
+    public static final String EVENT_ADAPTOR_CONF_PORT = "port";
 
 }

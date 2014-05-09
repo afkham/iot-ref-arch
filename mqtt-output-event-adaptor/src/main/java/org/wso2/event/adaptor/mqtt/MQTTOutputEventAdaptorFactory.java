@@ -20,9 +20,9 @@ package org.wso2.event.adaptor.mqtt;
 import org.wso2.carbon.event.output.adaptor.core.AbstractOutputEventAdaptor;
 import org.wso2.carbon.event.output.adaptor.core.OutputEventAdaptorFactory;
 
-public class TestOutEventAdaptorFactory implements OutputEventAdaptorFactory {
+public class MQTTOutputEventAdaptorFactory implements OutputEventAdaptorFactory {
 
     public AbstractOutputEventAdaptor getEventAdaptor() {
-        return new TestOutEventAdaptorType();
+        return MQTTOutputEventAdaptorType.getInstance();
     }
 }

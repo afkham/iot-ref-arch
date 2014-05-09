@@ -20,17 +20,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.osgi.service.component.ComponentContext;
 import org.wso2.carbon.event.output.adaptor.core.OutputEventAdaptorFactory;
-import org.wso2.event.adaptor.mqtt.TestOutEventAdaptorFactory;
+import org.wso2.event.adaptor.mqtt.MQTTOutputEventAdaptorFactory;
 
 
 /**
- * @scr.component name="output.testOutEventAdaptorService.component" immediate="true"
+ * @scr.component name="output.mqttEventAdaptorService.component" immediate="true"
  */
 
 
-public class TestOutEventAdaptorServiceDS {
+public class MQTTOutputEventAdaptorServiceDS {
 
-    private static final Log log = LogFactory.getLog(TestOutEventAdaptorServiceDS.class);
+    private static final Log log = LogFactory.getLog(MQTTOutputEventAdaptorServiceDS.class);
 
     /**
      * initialize the agent service here service here.
@@ -40,11 +40,11 @@ public class TestOutEventAdaptorServiceDS {
     protected void activate(ComponentContext context) {
 
         try {
-            OutputEventAdaptorFactory testOutEventAdaptorFactory = new TestOutEventAdaptorFactory();
-            context.getBundleContext().registerService(OutputEventAdaptorFactory.class.getName(), testOutEventAdaptorFactory, null);
-            log.info("Successfully deployed the TestOut output event adaptor service");
+            OutputEventAdaptorFactory mqttOutputEventAdaptorFactory = new MQTTOutputEventAdaptorFactory();
+            context.getBundleContext().registerService(OutputEventAdaptorFactory.class.getName(), mqttOutputEventAdaptorFactory, null);
+            log.info("Successfully deployed the MQTT output event adaptor service");
         } catch (RuntimeException e) {
-            log.error("Can not create the TestOut output event adaptor service ", e);
+            log.error("Can not create the MQTT output event adaptor service ", e);
         }
     }
 

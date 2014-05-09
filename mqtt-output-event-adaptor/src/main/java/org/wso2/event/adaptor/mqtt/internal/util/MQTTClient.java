@@ -40,7 +40,7 @@ public class MQTTClient implements MqttCallback {
 
     //private static final Log log = LogFactory.getLog(MQTTListener.class);
 
-    private MqttClient mqttClient;
+    public MqttClient mqttClient;
     private MqttConnectOptions connectionOptions;
     private boolean cleanSession;
     private String brokerUrl;
