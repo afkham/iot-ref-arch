@@ -5,7 +5,7 @@ package org.wso2.iot.refarch.rpi.agent;
  * ORGANIZATION  :  WSO2
  * PROJECT       :  WSO2 IoT Reference Architecture - Raspberry Pi Agent
  * FILENAME      :  Agent.java
- *
+ * 
  * This file is part of the Pi4J project. More information about
  * this project can be found here:  http://www.wso2.com/
  * **********************************************************************
@@ -15,9 +15,9 @@ package org.wso2.iot.refarch.rpi.agent;
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * 
  *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -69,12 +69,10 @@ public class Agent {
 
             JSONObject hardwareObject = new JSONObject();
             /* Hardware Information */
-            System.out.println("Start device reading");
-            System.out.println(SystemInfo.getCpuRevision());
-            System.out.println("Second");
-            hardwareObject.put("cpu_revision", "");
+            System.out.println("Starting information reading");
 
-
+            System.out.println("Reading CPU information");
+            hardwareObject.put("cpu_revision", SystemInfo.getCpuRevision());
             hardwareObject.put("serial_number", SystemInfo.getSerial());
             hardwareObject.put("cpu_architecture", SystemInfo.getCpuArchitecture());
             hardwareObject.put("cpu_part", SystemInfo.getCpuPart());
@@ -89,6 +87,7 @@ public class Agent {
             infoObject.put("hardware_info", hardwareObject);
 
             /* Memory Information */
+            System.out.println("Reading Memory information");
             JSONObject memoryObject = new JSONObject();
             memoryObject.put("total_memory", SystemInfo.getMemoryTotal());
             memoryObject.put("used_memory", SystemInfo.getMemoryUsed());
@@ -99,10 +98,11 @@ public class Agent {
             memoryObject.put("sdram_c_volate", SystemInfo.getMemoryVoltageSDRam_C());
             memoryObject.put("sdram_i_volate", SystemInfo.getMemoryVoltageSDRam_I());
             memoryObject.put("sdram_p_volate", SystemInfo.getMemoryVoltageSDRam_P());
-            infoObject.put("memory_info", hardwareObject);
+            infoObject.put("memory_info", memoryObject);
 
             /* OS information */
             JSONObject osObject = new JSONObject();
+            System.out.println("Reading OS information");
             osObject.put("os_name", SystemInfo.getOsName());
             osObject.put("os_version", SystemInfo.getOsVersion());
             osObject.put("os_architecture", SystemInfo.getOsArch());
@@ -110,6 +110,7 @@ public class Agent {
             osObject.put("os_firmware_date", SystemInfo.getOsFirmwareDate());
             infoObject.put("os_info", osObject);
 
+            System.out.println("Reading Java information");
             /* Java information */
             JSONObject javaObject = new JSONObject();
             javaObject.put("java_vendor", SystemInfo.getJavaVendor());
@@ -120,6 +121,7 @@ public class Agent {
             infoObject.put("java_info", javaObject);
 
             /* Network information */
+            System.out.println("Reading Network information");
             JSONObject networkObject = new JSONObject();
             networkObject.put("hostname", NetworkInfo.getHostname());
             JSONArray ipArray = new JSONArray();
@@ -131,13 +133,14 @@ public class Agent {
             for (String fqdn : NetworkInfo.getFQDNs())
                 fqdnArray.add(fqdn);
             for (String nameserver : NetworkInfo.getNameservers())
-                nameserverArray.add(nameserverArray);
+                nameserverArray.add(nameserver);
 
             networkObject.put("ip_address", ipArray);
             networkObject.put("fqdn", fqdnArray);
             networkObject.put("nameserver", nameserverArray);
-            infoObject.put("network_info",networkObject);
+            infoObject.put("network_info", networkObject);
 
+            System.out.println("Reading Clock information");
             /* Clock information */
             JSONObject clockObject = new JSONObject();
             clockObject.put("arm_frequency", SystemInfo.getClockFrequencyArm());
@@ -153,7 +156,7 @@ public class Agent {
             clockObject.put("hdmi_frequency", SystemInfo.getClockFrequencyHDMI());
             clockObject.put("dpi_frequency", SystemInfo.getClockFrequencyDPI());
             infoObject.put("clock_info", clockObject);
-
+            System.out.println("Finished information reading");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -173,7 +176,6 @@ public class Agent {
         @Override
         public void run() {
             try {
-                System.out.println("Agent sending data");
                 JSONObject infoObject = createInfoObject();
                 httpService.sendPayload(infoObject);
             } catch (Exception e) {
@@ -186,6 +188,6 @@ public class Agent {
      */
     private void run() {
         ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
-        dhtReaderScheduler.scheduleWithFixedDelay(new MonitoringDeamon(), 0, 20, TimeUnit.SECONDS);
+        dhtReaderScheduler.scheduleWithFixedDelay(new MonitoringDeamon(), 0, 10, TimeUnit.SECONDS);
     }
 }

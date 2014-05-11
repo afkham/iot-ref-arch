@@ -105,9 +105,7 @@ public class Main {
                 mqttClient.publish(1,humidityMsg.getBytes());
             } catch (MqttException e) {
                 e.printStackTrace();
-            }
-
-            //TODO: publish to CEP/BAM
+            }//TODO: publish to CEP/BAM
         }
     }
 }
