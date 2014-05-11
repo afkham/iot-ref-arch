@@ -44,12 +44,16 @@ public class HttpService extends ConnectionService {
         this.address = address;
     }
     public void sendPayload(JSONObject data) throws IOException, ExecutionException, InterruptedException {
+
+        JSONObject dataObj = new JSONObject();
+        dataObj.put("data", data);
+
         HttpClient client = HttpClientBuilder.create().build();
         System.out.println("Created HTTP Client");
         HttpPost post = new HttpPost(address);
         post.setHeader("content-type", "application/json");
         BasicHttpEntity he = new BasicHttpEntity();
-        he.setContent(new ByteArrayInputStream(data.toString().getBytes()));
+        he.setContent(new ByteArrayInputStream(dataObj.toString().getBytes()));
         post.setEntity(he);
         client.execute(post);
         System.out.println("Payload sent");
