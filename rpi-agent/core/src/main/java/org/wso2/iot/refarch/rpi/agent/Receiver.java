@@ -30,13 +30,12 @@ package org.wso2.iot.refarch.rpi.agent;
 public class Receiver{
     private MQTTClient mqttClient;
     private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
-
     public Receiver() {
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("192.168.1.9","1883");
         String clientId = "R-Pi-Receiver";
         String topicName = "iot/demo";
         mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
-
+        Agent.startService();
     }
 
     public static void main(String[] args) {

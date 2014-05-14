@@ -163,7 +163,7 @@ public class Agent {
         return infoObject;
     }
 
-    public static void main(String[] args) {
+    public static void startService(){
         System.out.println("Agent starting");
         Agent agent = new Agent();
         agent.run();

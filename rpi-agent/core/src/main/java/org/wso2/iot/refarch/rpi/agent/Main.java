@@ -46,7 +46,10 @@ package org.wso2.iot.refarch.rpi.agent;
  */
 
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.json.simple.JSONObject;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -59,14 +62,14 @@ public class Main {
     private DHTSensor dhtSensor;
     private MQTTClient mqttClient;
     private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
-
+    Agent agent;
     public Main(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
         String clientId = "R-Pi-Publisher";
         String topicName = "wso2iot";
         mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
-
+        agent = new Agent();
     }
 
     public static void main(String[] args) {
@@ -74,18 +77,17 @@ public class Main {
         if (args.length > 0 && args[0] != null) {
             dataPinNumber = Integer.parseInt(args[0]);
         }
-
         new Main(dataPinNumber).start();
     }
 
     private void start() {
         ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
-        dhtReaderScheduler.scheduleWithFixedDelay(new DHTSensorReaderTask(dhtSensor), 0, 20, TimeUnit.SECONDS);
+        dhtReaderScheduler.scheduleWithFixedDelay(new MonitoringTask(dhtSensor), 0, 20, TimeUnit.SECONDS);
     }
-    public class DHTSensorReaderTask implements Runnable {
+    public class MonitoringTask implements Runnable {
         private DHTSensor dhtSensor;
 
-        public DHTSensorReaderTask(DHTSensor dhtSensor) {
+        public MonitoringTask(DHTSensor dhtSensor) {
             this.dhtSensor = dhtSensor;
         }
 
@@ -94,18 +96,26 @@ public class Main {
             dhtSensor.read();
             float temperature = dhtSensor.getTemperature(false);
             int humidity = dhtSensor.getHumidity();
-
-            System.out.println("temperature = " + temperature);
-            System.out.println("humidity = " + humidity);
-
-            String message = "Temperature:" + Float.toString(temperature);
-            String humidityMsg = "Humidity:" + Integer.toString(humidity);
+            JSONObject payload = generatePayload(humidity, temperature);
             try {
-                mqttClient.publish(1,message.getBytes());
-                mqttClient.publish(1,humidityMsg.getBytes());
+                mqttClient.publish(1, payload.toJSONString().getBytes());
+                JSONObject infoObject = agent.createInfoObject();
+                agent.httpService.sendPayload(infoObject);
             } catch (MqttException e) {
                 e.printStackTrace();
-            }//TODO: publish to CEP/BAM
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+    public JSONObject generatePayload(int humdity, float temperature){
+        JSONObject payload = new JSONObject();
+        payload.put("humidity", humdity);
+        payload.put("temperature", temperature);
+        return payload;
     }
 }
