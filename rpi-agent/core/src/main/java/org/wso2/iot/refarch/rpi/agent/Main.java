@@ -100,6 +100,8 @@ public class Main {
             try {
                 mqttClient.publish(1, payload.toJSONString().getBytes());
                 JSONObject infoObject = agent.createInfoObject();
+                //Inserting the sensors payload to info object
+                infoObject.put("sensors", payload);
                 agent.httpService.sendPayload(infoObject);
             } catch (MqttException e) {
                 e.printStackTrace();
