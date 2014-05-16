@@ -111,7 +111,11 @@ public class MQTTClient implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-        runnable.run(new String(mqttMessage.getPayload()));
+        byte[] payload = mqttMessage.getPayload();
+        if(payload !=null && runnable!=null){
+            runnable.run(new String(payload));
+        }
+
     }
 
     @Override
