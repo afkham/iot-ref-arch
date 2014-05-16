@@ -42,7 +42,8 @@ public class Receiver{
     }
 
     public static void main(String[] args) {
-        new Receiver();
+        Receiver r = new Receiver();
+        r.pin.high();
     }
     public void run(String message){
         System.out.println("Message received "+message);
