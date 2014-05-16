@@ -30,7 +30,7 @@ public class Receiver{
     final GpioPinDigitalOutput pin;
     {
         gpio = GpioFactory.getInstance();
-        pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_17, "Relay");
+        pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Relay");
     }
     //17
     public Receiver() {
