@@ -34,7 +34,7 @@ public class Receiver{
     }
     //17
     public Receiver() {
-        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("192.168.1.9","1883");
+        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
         String clientId = "R-Pi-Receiver";
         String topicName = "iot/demo";
         mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName, this);
