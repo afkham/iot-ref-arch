@@ -253,7 +253,7 @@ LIB_PATH=$RPI_AGENT_HOME/lib
 
 while [ "$status" = "$START_EXIT_STATUS" ]
 do
-    $JAVACMD \
+    sudo $JAVACMD \
     -Xms56m -Xmx256m -XX:MaxPermSize=64m \
     -XX:+HeapDumpOnOutOfMemoryError \
     -XX:HeapDumpPath="$RPI_AGENT_HOME/repository/logs/heap-dump.hprof" \
