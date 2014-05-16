@@ -86,7 +86,6 @@ public class Agent {
             hardwareObject.put("hardware_revision", SystemInfo.getRevision());
             hardwareObject.put("is_hard_float_abi", SystemInfo.isHardFloatAbi());
             hardwareObject.put("board_type", SystemInfo.getBoardType().name());
-            hardwareObject.put("processor", SystemInfo.getProcessor());
             infoObject.put("hardware_info", hardwareObject);
 
             /* Memory Information */
