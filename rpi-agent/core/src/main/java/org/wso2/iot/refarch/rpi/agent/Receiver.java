@@ -30,7 +30,7 @@ public class Receiver{
     final GpioPinDigitalOutput pin;
     {
         gpio = GpioFactory.getInstance();
-        pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_17, "Relay");
+        pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "Relay");
     }
     //17
     public Receiver() {
@@ -43,7 +43,6 @@ public class Receiver{
 
     public static void main(String[] args) {
         Receiver r = new Receiver();
-        r.pin.high();
     }
     public void run(String message){
         System.out.println("Message received "+message);
