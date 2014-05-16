@@ -45,6 +45,7 @@ public class Receiver{
         new Receiver();
     }
     public void run(String message){
+        System.out.println("Message received "+message);
         if(message.equals("ON")){
            pin.high();
         }else if(message.equals("OFF")){
