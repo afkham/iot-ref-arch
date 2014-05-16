@@ -40,7 +40,7 @@ public class Publisher {
 
     public Publisher(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
-        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
+        mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.151","1883");
         String clientId = "R-Pi-Publisher";
         String topicName = "wso2iot";
         mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);

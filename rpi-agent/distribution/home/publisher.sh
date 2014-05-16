@@ -262,6 +262,6 @@ do
     -classpath "$RPI_AGENT_CLASSPATH" \
     -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
     -Djava.io.tmpdir="$RPI_AGENT_HOME/tmp" \
-    org.wso2.iot.refarch.rpi.agent.Main $*
+    org.wso2.iot.refarch.rpi.agent.Publisher $*
     status=$?
 done
