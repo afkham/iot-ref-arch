@@ -79,7 +79,10 @@ public class Agent {
             hardwareObject.put("cpu_temperature", SystemInfo.getCpuTemperature());
             hardwareObject.put("cpu_core_voltage", SystemInfo.getCpuVoltage());
             hardwareObject.put("mips", SystemInfo.getSerial());
-            hardwareObject.put("processor", SystemInfo.getProcessor());
+            /*
+            *  Removed due to https://github.com/Pi4J/pi4j/issues/63
+            * */
+            //hardwareObject.put("processor", SystemInfo.getProcessor());
             hardwareObject.put("hardware_revision", SystemInfo.getRevision());
             hardwareObject.put("is_hard_float_abi", SystemInfo.isHardFloatAbi());
             hardwareObject.put("board_type", SystemInfo.getBoardType().name());
