@@ -15,7 +15,7 @@
 #  limitations under the License.
 
 # ----------------------------------------------------------------------------
-# Main Script for the WSO2 Carbon Server
+# Publisher Script for the WSO2 Carbon Server
 #
 # Environment Variable Prequisites
 #

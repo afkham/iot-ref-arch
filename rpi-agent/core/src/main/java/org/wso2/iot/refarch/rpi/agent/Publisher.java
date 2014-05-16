@@ -28,9 +28,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Main class in the Raspberry Pi IoT agent
+ * Publisher class in the Raspberry Pi IoT agent
  */
-public class Main {
+public class Publisher {
     private static final int DEFAULT_DATA_PIN_NUMBER = 15;
     private static final int DEFAULT_UPDATE_INTERVAL = 10;
     private DHTSensor dhtSensor;
@@ -38,7 +38,7 @@ public class Main {
     private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
     private Agent agent;
 
-    public Main(int dataPinNumber) {
+    public Publisher(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("10.100.0.209","1883");
         String clientId = "R-Pi-Publisher";
@@ -56,7 +56,7 @@ public class Main {
             updateInterval = Integer.parseInt(args[1]);
         }
 
-        new Main(dataPinNumber).start(updateInterval);
+        new Publisher(dataPinNumber).start(updateInterval);
     }
 
     private void start(int updateInterval) {
