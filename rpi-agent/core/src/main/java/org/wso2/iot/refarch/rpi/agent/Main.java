@@ -98,7 +98,10 @@ public class Main {
             int humidity = dhtSensor.getHumidity();
             JSONObject payload = generatePayload(humidity, temperature);
             try {
-                mqttClient.publish(1, payload.toJSONString().getBytes());
+                String message = "Temperature:" + Float.toString(temperature);
+                String humidityMsg = "Humidity:" + Integer.toString(humidity);
+                mqttClient.publish(1,message.getBytes());
+                mqttClient.publish(1,humidityMsg.getBytes());
                 JSONObject infoObject = agent.createInfoObject();
                 //Inserting the sensors payload to info object
                 infoObject.put("sensors", payload);
