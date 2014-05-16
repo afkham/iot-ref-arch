@@ -27,18 +27,37 @@ package org.wso2.iot.refarch.rpi.agent;
  * #L%
  */
 
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.RaspiPin;
+
 public class Receiver{
     private MQTTClient mqttClient;
     private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
+    final GpioController gpio;
+    final GpioPinDigitalOutput pin;
+    {
+        gpio = GpioFactory.getInstance();
+        pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_17, "Relay");
+    }
+    //17
     public Receiver() {
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig("192.168.1.9","1883");
         String clientId = "R-Pi-Receiver";
         String topicName = "iot/demo";
-        mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName);
+        mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName, this);
         Agent.startService();
     }
 
     public static void main(String[] args) {
         new Receiver();
+    }
+    public void run(String message){
+        if(message.equals("on")){
+           pin.high();
+        }else if(message.equals("off")){
+            pin.low();
+        }
     }
 }

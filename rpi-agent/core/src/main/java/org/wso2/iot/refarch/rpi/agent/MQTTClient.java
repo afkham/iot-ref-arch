@@ -30,7 +30,6 @@ package org.wso2.iot.refarch.rpi.agent;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
-import java.io.PrintWriter;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -49,7 +48,7 @@ public class MQTTClient implements MqttCallback {
     private String mqttClientId;
     private String topicName;
     private Semaphore semaphore = new Semaphore(0);
-
+    private Receiver runnable;
     public MQTTClient(MQTTBrokerConnectionConfig mqttBrokerConnectionConfig, String mqttClientId, String topic) {
         //Initializing the variables locally
         this.brokerUrl = mqttBrokerConnectionConfig.getBrokerUrl();
@@ -94,6 +93,11 @@ public class MQTTClient implements MqttCallback {
 
     }
 
+    public MQTTClient(MQTTBrokerConnectionConfig mqttBrokerConnectionConfig, String clientId, String topicName, Receiver receiver) {
+        this(mqttBrokerConnectionConfig, clientId, topicName);
+        this.runnable = receiver;
+    }
+
     public void publish(int qos, byte[] payload) throws MqttException {
 
         // Connect to the MQTT server
@@ -115,10 +119,8 @@ public class MQTTClient implements MqttCallback {
     }
 
     @Override
-    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-        PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
-        writer.println("YES");
-        writer.close();
+    public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
+        runnable.run(new String(mqttMessage.getPayload()));
     }
 
     @Override
