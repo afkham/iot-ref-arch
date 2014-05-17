@@ -22,8 +22,14 @@ import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
+import org.json.simple.JSONObject;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Receiver{
+    private final Agent agent;
     private MQTTClient mqttClient;
     private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
     final GpioController gpio;
@@ -38,11 +44,34 @@ public class Receiver{
         String clientId = "R-Pi-Receiver";
         String topicName = "iot/demo";
         mqttClient = new MQTTClient(mqttBrokerConnectionConfig,clientId,topicName, this);
-        Agent.startService();
+        agent = new Agent();
     }
 
+    private void start() {
+        ScheduledExecutorService dhtReaderScheduler = Executors.newScheduledThreadPool(1);
+        dhtReaderScheduler.scheduleWithFixedDelay(new MonitoringTask(), 0, 10, TimeUnit.SECONDS);
+    }
+    public class MonitoringTask implements Runnable {
+
+        public MonitoringTask() {
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                JSONObject infoObject = agent.createInfoObject();
+                // If true - Fan is on. If false Fan is off.
+                infoObject.put("actuator", pin.isHigh());
+                agent.httpService.sendPayload(infoObject);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public static void main(String[] args) {
         Receiver r = new Receiver();
+        r.start();
     }
     public void run(String message){
         System.out.println("Message received "+message);
