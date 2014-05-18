@@ -24,4 +24,5 @@ package org.wso2.iot.refarch.rpi.agent;
 public final class RpiAgentConstants {
 
     public static final String MQTT_AGENT_HOSTNAME = "mqqt.host";
+    public static final String EMM_AGENT_HOSTNAME = "emm.host";
 }

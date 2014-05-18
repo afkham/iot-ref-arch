@@ -55,7 +55,7 @@ public class Agent {
             Properties properties = new Properties();
             properties.load(is);
             System.out.println("Server ip "+properties.getProperty("serverpath"));
-            httpService = new HttpService( properties.getProperty("serverpath"));
+            httpService = new HttpService( RpiAgentConstants.EMM_AGENT_HOSTNAME + ":9763/mdm/api/notifications/iot");
         }catch(Exception e){
             e.printStackTrace();
         }
