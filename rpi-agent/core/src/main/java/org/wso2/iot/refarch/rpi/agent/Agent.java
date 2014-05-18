@@ -51,10 +51,7 @@ public class Agent {
             Init block that creates the http service from a config file
         */
         try{
-            InputStream is = new FileInputStream("config.properties");
-            Properties properties = new Properties();
-            properties.load(is);
-            System.out.println("Server ip "+properties.getProperty("serverpath"));
+            System.out.println("Server ip "+RpiAgentConstants.EMM_AGENT_HOSTNAME + ":9763/mdm/api/notifications/iot"));
             httpService = new HttpService( RpiAgentConstants.EMM_AGENT_HOSTNAME + ":9763/mdm/api/notifications/iot");
         }catch(Exception e){
             e.printStackTrace();
