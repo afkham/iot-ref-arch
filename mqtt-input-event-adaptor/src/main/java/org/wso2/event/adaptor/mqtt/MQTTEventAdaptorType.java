@@ -39,7 +39,6 @@ public final class MQTTEventAdaptorType extends AbstractInputEventAdaptor {
     private static MQTTEventAdaptorType mqttEventAdaptorAdaptor = new MQTTEventAdaptorType();
 
     public static MQTTEventAdaptorType getInstance() {
-
         return mqttEventAdaptorAdaptor;
     }
 
@@ -59,7 +58,9 @@ public final class MQTTEventAdaptorType extends AbstractInputEventAdaptor {
     protected void init() {
        this.resourceBundle = ResourceBundle.getBundle("org.wso2.event.adaptor.mqtt.i18n.Resources", Locale.getDefault());
         log.info("MQTTEventAdaptorType init");
+
     }
+
 
     @Override
     protected List<Property> getInputAdaptorProperties() {
