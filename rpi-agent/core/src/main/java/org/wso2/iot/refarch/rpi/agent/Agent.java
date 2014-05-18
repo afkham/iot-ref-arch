@@ -33,6 +33,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.wso2.iot.refarch.rpi.agent.connector.HttpService;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -48,8 +51,11 @@ public class Agent {
             Init block that creates the http service from a config file
         */
         try{
-            System.out.println("Server ip "+RpiAgentConstants.EMM_AGENT_HOSTNAME + ":9763/mdm/api/notifications/iot");
-            httpService = new HttpService( RpiAgentConstants.EMM_AGENT_HOSTNAME + ":9763/mdm/api/notifications/iot");
+            InputStream is = new FileInputStream("config.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+            System.out.println("Server ip "+properties.getProperty("emmpath"));
+            httpService = new HttpService( properties.getProperty("emmpath"));
         }catch(Exception e){
             e.printStackTrace();
         }

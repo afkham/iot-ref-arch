@@ -24,6 +24,11 @@ import com.pi4j.io.gpio.GpioPinDigitalOutput;
 import com.pi4j.io.gpio.RaspiPin;
 import org.json.simple.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -40,6 +45,18 @@ public class Receiver{
     }
     //17
     public Receiver() {
+        InputStream is = null;
+        try {
+            is = new FileInputStream("config.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+            System.out.println("Server ip "+properties.getProperty("mqttpath"));
+            RpiAgentConstants.MQTT_AGENT_HOSTNAME =  properties.getProperty("mqttpath");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig(RpiAgentConstants.MQTT_AGENT_HOSTNAME,"1883");
         String clientId = "R-Pi-Receiver";
         String topicName = "iot/demo";

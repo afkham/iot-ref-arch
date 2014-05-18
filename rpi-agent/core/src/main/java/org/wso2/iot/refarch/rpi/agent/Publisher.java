@@ -21,7 +21,11 @@ package org.wso2.iot.refarch.rpi.agent;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.simple.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -37,9 +41,20 @@ public class Publisher {
     private MQTTClient mqttClient;
     private MQTTBrokerConnectionConfig mqttBrokerConnectionConfig;
     private Agent agent;
-
     public Publisher(int dataPinNumber) {
         dhtSensor = new DHTSensor(DHTSensorType.DHT11, dataPinNumber);
+        InputStream is = null;
+        try {
+            is = new FileInputStream("config.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+            System.out.println("Server ip "+properties.getProperty("mqttpath"));
+            RpiAgentConstants.MQTT_AGENT_HOSTNAME =  properties.getProperty("mqttpath");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mqttBrokerConnectionConfig = new MQTTBrokerConnectionConfig(RpiAgentConstants.MQTT_AGENT_HOSTNAME,"1883");
         String clientId = "R-Pi-Publisher";
         String topicName = "wso2iot";
